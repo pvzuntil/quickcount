@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>PERHITUNGAN CEPAT</title>
+
+  <link rel="stylesheet" href="sem/sem.min.css">
+  <link rel="stylesheet" href="sw/sw.css">
+  <link rel="stylesheet" href="customCss.css">
+  
+  <script src="jquery/jquery.min.js"></script>
+  <script src="v.js"></script>
+  <script src="sem/sem.min.js"></script>
+  <script src="sw/sw.js"></script>
+
+
+</head>
+<body>
+  <div id="appVue">
+    <div class="ui teal menu inverted huge">
+      <div class="item" style="font-weight:bold">
+        <i class="clock outline icon"></i> {{namaAplikasi}}
+      </div>
+      <div class="menu right">
+        <div class="item">
+          <div class="ui dropdown">
+            <i class="bars icon"></i>
+            <div class="menu">
+              <div class="item">
+                Reset Ulang
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END HEADER -->
+    <!-- BEGIN CONTENNT -->
+    <div class="ui container" style="padding-top:20px; padding-bottom: 20px;">
+      <h1 class="ui header center aligned">PERHITUNGAN CEPAT {{namaWilayah | uppercase}}</h1>
+      <div class="ui segments">
+        <div class="ui segment">
+          <h3 class="ui header center aligned">CALON PRESIDEN DAN CALON WAKIL PRESIDEN</h3>
+        </div>
+        <!-- DAFTAR PASLON -->
+        <div class="ui secondary segment">
+          <div class="ui grid two column">
+            <!-- STAT PASLON 1 -->
+            <div class="column tengahKan">
+              <div class="ui statistic">
+                <div class="value">
+                  {{suaraPaslon1}}
+                </div>
+                <div class="label">
+                  SUARA
+                </div>
+              </div>
+            </div>
+            <!-- END -->
+            <!-- STAT PASLON 2 -->
+            <div class="column tengahKan">
+              <div class="ui statistic">
+                <div class="value">
+                  {{suaraPaslon2}}
+                </div>
+                <div class="label">
+                  SUARA
+                </div>
+              </div>
+            </div>
+            <!-- END -->
+          </div>
+          <div class="ui centered grid two column">
+            <!-- PASLON 1 -->
+            <div class="column">
+              <div class="ui teal segment" style="cursor:pointer" @click="prepareAddSuaraPaslon('1')">
+                <div class="ui centered grid column">
+                  <div class="column tengahKan">
+                    <div class="ui center aligned blue circular mini segment">
+                      <div class="ui header">
+                        01
+                      </div>
+                    </div>
+                    <img src="kaosIjo.jpg" alt="" class="ui fluid rounded image">
+                    <div class="ui centered header">JOKO WIDODO & MA'RUF AMIN</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- END PASLON 1 -->
+            <!-- PASLON 2 -->
+            <div class="column">
+              <div class="ui teal segment" style="cursor:pointer" @click="prepareAddSuaraPaslon('2')">
+                <div class="ui centered grid column">
+                  <div class="column tengahKan">
+                    <div class="ui center aligned blue circular mini segment">
+                      <div class="ui header">
+                        02
+                      </div>
+                    </div>
+                    <img src="kaosIjo.jpg" alt="" class="ui fluid rounded image">
+                    <div class="ui centered header">PRABOWO & SANDIAGA UNO</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--END PASLON 2 -->
+          </div>
+        </div>
+        <!-- END DAFTAR PASLON -->
+        <div class="ui segment">
+          <div class="ui grid stackable">
+            <div class="column">
+              <div class="ui blue segment tengahKan">
+                <div class="ui statistic">
+                  <div class="label">
+                    JUMLAH DPT
+                  </div>
+                  <div class="value">
+                    {{jumlahDPT}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui grid two column stackable">
+            <div class="column">
+              <div class="ui green segment tengahKan">
+                <div class="ui statistic">
+                  <div class="label">
+                    TOTAL SUARA
+                  </div>
+                  <div class="value">
+                    {{totalSuara}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="column">
+              <div class="ui green segment tengahKan">
+                <div class="ui statistic">
+                  <div class="label">
+                    SUARA GOLPUT
+                  </div>
+                  <div class="value">
+                    {{suaraGolput}}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END CONTENT -->
+
+    <!-- MODALS -->
+    <div class="ui modal" id="modalInstal" v-if="!instal">
+      <div class="header">
+        Sebelum memakai aplikasi, silahkan isi form berikut !
+      </div>
+      <div class="content">
+        <div class="ui form">
+          <div class="field">
+            <label for="">Nama Wilayah</label>
+            <input type="text" name="" id="" placeholder="Masukkan nama wilayah .." v-model="namaWilayah" @keyup.enter="saveInstal">
+          </div>
+          <div class="field">
+            <label for="">Jumlah DPT wilayah</label>
+            <input type="number" name="" id="" placeholder="Masukkan jumlah DPT ..." min="1" v-model="jumlahDPT" @keyup.enter="saveInstal">
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <div class="ui green icon button" @click="saveInstal"><i class="check icon"></i></div>
+      </div>
+    </div>
+    <!--  -->
+    <div class="ui small modal" id="modalAddSuara">
+      <div class="header">
+        Peringatan
+      </div>
+      <div class="content">
+        Apakah anda yakin ingin menambah suara paslon 0{{prepareAddSuara}} .?
+      </div>
+      <div class="actions">
+        <div class="ui buttons">
+          <div class="ui red cancel button">Batal</div>
+          <div class="ui green button" @click="addSuaraPaslon">Ya</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="customScript.js"></script>
+
+</body>
+</html>
